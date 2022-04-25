@@ -39,4 +39,6 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
         builder.Entity<Player>()
             .Property(p => p.LastName).HasMaxLength(30);
     }
+
+    public DbSet<League> League { get; set; }
 }
