@@ -12,7 +12,8 @@ const PROXY_CONFIG = [
       "/Identity",
       "/connect",
       "/ApplyDatabaseMigrations",
-      "/_framework"
+      "/_framework",
+      "/league"
    ],
     target: target,
     secure: false,
