@@ -1,0 +1,13 @@
+.table-container {
+    margin: 0 auto;
+    width: 40%
+}
+
+.table-container a {
+    float: right;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+}

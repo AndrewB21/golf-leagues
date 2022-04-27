@@ -13,7 +13,7 @@ const PROXY_CONFIG = [
       "/connect",
       "/ApplyDatabaseMigrations",
       "/_framework",
-      "/league"
+      "/leagues"
    ],
     target: target,
     secure: false,

@@ -1,33 +1,38 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="dashboard">
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="league-name">
-      <th mat-header-cell *matHeaderCellDef> League Name</th>
-      <td mat-cell *matCellDef="let league"> {{ league.name }} </td>
-    </ng-container>
-  
-    <!-- Start Date Column -->
-    <ng-container matColumnDef="start-date">
-      <th mat-header-cell *matHeaderCellDef> Start Date </th>
-      <td mat-cell *matCellDef="let league"> {{ moment(league.startDate).format('MM-DD-YY') }} </td>
-    </ng-container>
-  
-    <!-- End Date Column -->
-    <ng-container matColumnDef="end-date">
-      <th mat-header-cell *matHeaderCellDef> End Date </th>
-      <td mat-cell *matCellDef="let league"> {{ moment(league.endDate).format('MM-DD-YY') }} </td>
-    </ng-container>
-  
-    <!-- Next Event Column (STILL TODO) -->
-    <ng-container matColumnDef="next-event-date">
-      <th mat-header-cell *matHeaderCellDef> Next Event </th>
-      <td mat-cell *matCellDef="let league"> __TODO__ </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="league-name">
+        <th mat-header-cell *matHeaderCellDef> League Name</th>
+        <td mat-cell *matCellDef="let league"> {{ league.name }} </td>
+      </ng-container>
+    
+      <!-- Start Date Column -->
+      <ng-container matColumnDef="start-date">
+        <th mat-header-cell *matHeaderCellDef> Start Date </th>
+        <td mat-cell *matCellDef="let league"> {{ moment(league.startDate).format('MM-DD-YY') }} </td>
+      </ng-container>
+    
+      <!-- End Date Column -->
+      <ng-container matColumnDef="end-date">
+        <th mat-header-cell *matHeaderCellDef> End Date </th>
+        <td mat-cell *matCellDef="let league"> {{ moment(league.endDate).format('MM-DD-YY') }} </td>
+      </ng-container>
+    
+      <!-- Next Event Column (STILL TODO) -->
+      <ng-container matColumnDef="next-event-date">
+        <th mat-header-cell *matHeaderCellDef> Next Event </th>
+        <td mat-cell *matCellDef="let league"> __TODO__ </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <button mat-raised-button color="primary" (click)="openDialog()">Create A League</button>
+  </div>
+</div>
   

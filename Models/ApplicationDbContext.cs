@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Duende.IdentityServer.EntityFramework.Options;
-using golf_leagues_identity.Models;
 
 namespace golf_leagues_identity.Models;
 

@@ -19,10 +19,18 @@ namespace golf_leagues_identity.Services
         {
             return this.dbContext.League.ToList();
         }
+
+        public League CreateLeague(League newLeague)
+        {
+            this.dbContext.League.Add(newLeague);
+            this.dbContext.SaveChanges();
+            return newLeague;
+        }
     }
 
     public interface ILeagueService
     {
         List<League> GetAll();
+        League CreateLeague(League newLeague);
     }
 }
