@@ -1,0 +1,12 @@
+.table-container {
+    margin: 0 auto;
+    width: 40%
+}
+
+table {
+    width: 100%;
+}
+
+::ng-deep .mat-row {
+    cursor: pointer;
+}

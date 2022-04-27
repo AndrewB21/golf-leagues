@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Duende.IdentityServer.EntityFramework.Options;
-using golf_leagues_identity.Models;
 
 namespace golf_leagues_identity.Models;
 
@@ -39,4 +38,6 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
         builder.Entity<Player>()
             .Property(p => p.LastName).HasMaxLength(30);
     }
+
+    public DbSet<League> League { get; set; }
 }
