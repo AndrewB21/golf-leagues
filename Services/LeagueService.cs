@@ -20,6 +20,11 @@ namespace golf_leagues_identity.Services
             return this.dbContext.League.ToList();
         }
 
+         public League GetLeagueById(int id)
+        {
+            return this.dbContext.League.FirstOrDefault(l => l.Id == id);
+        }
+
         public League CreateLeague(League newLeague)
         {
             this.dbContext.League.Add(newLeague);
@@ -31,6 +36,7 @@ namespace golf_leagues_identity.Services
     public interface ILeagueService
     {
         List<League> GetAll();
+        League GetLeagueById(int id);
         League CreateLeague(League newLeague);
     }
 }

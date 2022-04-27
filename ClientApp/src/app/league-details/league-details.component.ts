@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { League } from '../models/league.model';
 
 @Component({
   selector: 'app-league-details',
@@ -6,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./league-details.component.css']
 })
 export class LeagueDetailsComponent implements OnInit {
-
-  constructor() { }
+  public league: League;
+  constructor(private route: ActivatedRoute) { 
+    this.league = this.route.snapshot.data['league'];
+  }
 
   ngOnInit(): void {
   }

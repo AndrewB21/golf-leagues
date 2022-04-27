@@ -21,6 +21,8 @@ import { HomeComponent } from './home/home.component';
 import { LeagueCreatorComponent } from './league-creator/league-creator.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LeagueDetailsComponent } from './league-details/league-details.component';
+import { AllLeaguesResolver } from './resolvers/all-leagues.resolver';
+import { SingleLeagueResolver } from './resolvers/single-league.resolver';
 
 @NgModule({
   declarations: [
@@ -48,8 +50,12 @@ import { LeagueDetailsComponent } from './league-details/league-details.componen
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthorizeGuard] },
-      { path: 'details/league/:id', component: LeagueDetailsComponent, canActivate: [AuthorizeGuard]}
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthorizeGuard], resolve: {
+        leagues: AllLeaguesResolver
+      } },
+      { path: 'details/league/:id', component: LeagueDetailsComponent, canActivate: [AuthorizeGuard], resolve: {
+        league: SingleLeagueResolver
+      }}
     ]),
   ],
   providers: [
