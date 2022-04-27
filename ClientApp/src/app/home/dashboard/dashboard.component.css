@@ -3,11 +3,10 @@
     width: 40%
 }
 
-.table-container a {
-    float: right;
-    margin-top: 10px;
-}
-
 table {
     width: 100%;
+}
+
+::ng-deep .mat-row {
+    cursor: pointer;
 }
