@@ -10,5 +10,5 @@ public class League
     public string Description { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public List<Player> Players { get; set; }
+    public virtual ICollection<Player> Players { get; set; }
 }

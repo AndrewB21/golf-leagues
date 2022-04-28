@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import { LeagueCreatorComponent } from 'src/app/league-creator/league-creator.component';
 import { LeagueService } from 'src/app/services/league.service';
 import { ActivatedRoute } from '@angular/router';
+import { PlayerCreatorComponent } from 'src/app/player-creator/player-creator.component';
+import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,12 +21,17 @@ export class DashboardComponent implements OnInit {
   public moment = moment; // Used for formatting dates
   constructor(
     private leagueService: LeagueService, 
+    private playerService: PlayerService,
     public dialog: MatDialog,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.dataSource = this.route.snapshot.data['leagues'];
+    console.log(this.route.snapshot.data['leagues'])
+    this.playerService.getAllPlayers().subscribe(players => {
+      console.log(players);
+    })
   }
 
   public updateLeagueDataSource() {
@@ -35,6 +42,17 @@ export class DashboardComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueCreatorComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.updateLeagueDataSource();
+    });
+  }
+
+  openPlayerDialog(): void {
+    const dialogRef = this.dialog.open(PlayerCreatorComponent, {
       width: '300px',
     });
 

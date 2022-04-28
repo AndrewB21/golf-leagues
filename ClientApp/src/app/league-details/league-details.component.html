@@ -1,2 +1,4 @@
-<p>league-details works!</p>
-{{ league.name }}
+<h1>{{ league.name }} <span class="date-range">({{ moment(league.startDate).format('MM-DD-YY') }} - {{ moment(league.endDate).format('MM-DD-YY') }})</span></h1>
+<h2>{{ league.description }}</h2>
+
+<button mat-raised-button color="secondary" (click)="addPlayer()">Add Player</button>

@@ -2,7 +2,7 @@ import { League } from "./league.model";
 
 
 export class Player {
-    constructor(firstName: string, lastName: string, handicap: number, leagues: League[] = []) {
+    constructor(firstName: string, lastName: string, handicap: number, leagues?: League[]) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.handicap = handicap;
@@ -13,5 +13,5 @@ export class Player {
     public firstName: string;
     public lastName: string;
     public handicap: number;
-    public leagues: League[];
+    public leagues?: League[];
 }

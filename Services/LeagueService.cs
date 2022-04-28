@@ -1,9 +1,5 @@
 using golf_leagues_identity.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 namespace golf_leagues_identity.Services
 {
     public class LeagueService : ILeagueService
@@ -17,7 +13,7 @@ namespace golf_leagues_identity.Services
 
         public List<League> GetAll()
         {
-            return this.dbContext.League.ToList();
+            return this.dbContext.League.Include(l => l.Players).ToList();
         }
 
          public League GetLeagueById(int id)
