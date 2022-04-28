@@ -14,6 +14,10 @@ export class LeagueService {
     return this.httpClient.get<League[]>('/leagues/all');
   }
 
+  public getLeagueById(id: number): Observable<League> {
+    return this.httpClient.get<League>(`/leagues/${id}`);
+  }
+
   public createLeague(newLeague: League): Observable<League> {
     return this.httpClient.post<League>(
       '/leagues/create',

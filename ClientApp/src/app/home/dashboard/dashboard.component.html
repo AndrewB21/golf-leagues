@@ -30,7 +30,7 @@
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="'/details/league/' + row.id"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/details/league/', row.id]"></tr>
     </table>
     <button mat-raised-button color="primary" (click)="openDialog()">Create A League</button>
   </div>

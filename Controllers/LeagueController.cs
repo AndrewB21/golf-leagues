@@ -23,6 +23,13 @@ public class LeagueController : Controller
         return Ok(_leagueService.GetAll());
     }
 
+    [HttpGet]
+    [Route("leagues/{id}")]
+    public IActionResult GetLeagueById(int id)
+    {
+        return Ok(_leagueService.GetLeagueById(id));
+    }
+
     [HttpPost("leagues/create")]
     public IActionResult CreateLeague([FromBody] League newLeague)
     {

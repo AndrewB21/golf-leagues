@@ -6,6 +6,7 @@ import { League } from 'src/app/models/league.model';
 import * as moment from 'moment';
 import { LeagueCreatorComponent } from 'src/app/league-creator/league-creator.component';
 import { LeagueService } from 'src/app/services/league.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +19,12 @@ export class DashboardComponent implements OnInit {
   public moment = moment; // Used for formatting dates
   constructor(
     private leagueService: LeagueService, 
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.updateLeagueDataSource();
+    this.dataSource = this.route.snapshot.data['leagues'];
   }
 
   public updateLeagueDataSource() {
