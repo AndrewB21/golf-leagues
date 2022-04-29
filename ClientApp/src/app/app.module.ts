@@ -23,6 +23,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LeagueDetailsComponent } from './league-details/league-details.component';
 import { AllLeaguesResolver } from './resolvers/all-leagues.resolver';
 import { SingleLeagueResolver } from './resolvers/single-league.resolver';
+import { PlayerCreatorComponent } from './player-creator/player-creator.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SingleLeagueResolver } from './resolvers/single-league.resolver';
     HomeComponent,
     DashboardComponent,
     LeagueCreatorComponent,
-    LeagueDetailsComponent
+    LeagueDetailsComponent,
+    PlayerCreatorComponent
   ],
   imports: [
     ApiAuthorizationModule,

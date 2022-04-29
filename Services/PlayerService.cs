@@ -25,10 +25,20 @@ namespace golf_leagues_identity.Services
 
         public Player CreatePlayer(Player newPlayer)
         {
-            Player playerWithoutLeagues = new Player(newPlayer.FirstName, newPlayer.LastName, newPlayer.Handicap);
-            playerWithoutLeagues.Leagues = new List<League>(newPlayer.Leagues);
-            this.dbContext.Player.Add(playerWithoutLeagues);
-            Console.WriteLine(playerWithoutLeagues.Id);
+            // Create a new Player object without Leagues to add to the Players table
+            Player playerDto = new Player(newPlayer.FirstName, newPlayer.LastName, newPlayer.Handicap);
+            this.dbContext.Player.Add(playerDto);
+            this.dbContext.SaveChanges();
+
+            // Add the new player to each league stored on the original newPlayer object
+            foreach(League league in newPlayer.Leagues)
+            {
+                League leagueFromDb = this.dbContext.League.Include(l => l.Players).FirstOrDefault(l => l.Id == league.Id);
+                if (leagueFromDb != null)
+                {
+                    leagueFromDb.Players.Add(playerDto);
+                }
+            }
             this.dbContext.SaveChanges();
             return newPlayer;
         }

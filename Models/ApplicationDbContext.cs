@@ -10,7 +10,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
         : base(options, operationalStoreOptions)
     {
-        
+        this.ChangeTracker.LazyLoadingEnabled = false;
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -27,6 +27,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
             .Property(l => l.Name).HasMaxLength(50);
         builder.Entity<League>()
             .Property(l => l.Description).HasMaxLength(200);
+        builder.Entity<League>()
+            .HasMany(l => l.Players)
+            .WithMany(p => p.Leagues);
 
         builder.Entity<Player>()
             .HasKey(p => p.Id);
@@ -37,7 +40,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
             .Property(p => p.FirstName).HasMaxLength(30);
         builder.Entity<Player>()
             .Property(p => p.LastName).HasMaxLength(30);
+        
     }
 
     public DbSet<League> League { get; set; }
+    public DbSet<Player> Player { get; set; }
 }

@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
 namespace golf_leagues_identity.Models;
 
 public class League
@@ -10,5 +7,5 @@ public class League
     public string Description { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public List<Player> Players { get; set; }
+    public virtual ICollection<Player> Players { get; set; }
 }

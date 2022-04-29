@@ -1,0 +1,6 @@
+.date-range {
+    font-size: 16px;
+    transform: translateY(-1px);
+    display: inline-block;
+    margin-left: 10px;
+}
