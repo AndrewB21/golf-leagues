@@ -30,6 +30,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
         builder.Entity<League>()
             .HasMany(l => l.Players)
             .WithMany(p => p.Leagues);
+        builder.Entity<League>()
+            .HasMany(l => l.Events)
+            .WithOne(e => e.League);
 
         builder.Entity<Player>()
             .HasKey(p => p.Id);

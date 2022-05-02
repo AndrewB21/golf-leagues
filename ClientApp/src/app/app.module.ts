@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSelectFilterModule } from 'mat-select-filter';
 import { MatTableModule } from '@angular/material/table';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -24,6 +26,8 @@ import { LeagueDetailsComponent } from './league-details/league-details.componen
 import { AllLeaguesResolver } from './resolvers/all-leagues.resolver';
 import { SingleLeagueResolver } from './resolvers/single-league.resolver';
 import { PlayerCreatorComponent } from './player-creator/player-creator.component';
+import { CourseCreatorComponent } from './course-creator/course-creator.component';
+import { EventCreatorComponent } from './event-creator/event-creator.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,9 @@ import { PlayerCreatorComponent } from './player-creator/player-creator.componen
     DashboardComponent,
     LeagueCreatorComponent,
     LeagueDetailsComponent,
-    PlayerCreatorComponent
+    PlayerCreatorComponent,
+    CourseCreatorComponent,
+    EventCreatorComponent
   ],
   imports: [
     ApiAuthorizationModule,
@@ -48,6 +54,8 @@ import { PlayerCreatorComponent } from './player-creator/player-creator.componen
     MatFormFieldModule,
     MatInputModule,
     MatMomentDateModule,
+    MatSelectModule,
+    MatSelectFilterModule,
     MatTableModule,
     ReactiveFormsModule,
     RouterModule.forRoot([

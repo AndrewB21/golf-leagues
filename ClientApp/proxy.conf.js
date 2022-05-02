@@ -14,7 +14,9 @@ const PROXY_CONFIG = [
       "/ApplyDatabaseMigrations",
       "/_framework",
       "/leagues",
-      "/players"
+      "/players",
+      "/courses",
+      "/events"
    ],
     target: target,
     secure: false,

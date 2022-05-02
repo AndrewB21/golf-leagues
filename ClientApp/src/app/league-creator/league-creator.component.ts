@@ -39,7 +39,7 @@ export class LeagueCreatorComponent implements OnInit {
     formValues.startDate = formValues.startDate.toDate();
     formValues.endDate = formValues.endDate.toDate();
     
-    const newLeague = new League(formValues.name, formValues.description, undefined, formValues.startDate, formValues.endDate);
+    const newLeague = new League(formValues.name, formValues.description, undefined, formValues.startDate, formValues.endDate, []);
     try {
       this.leagueService.createLeague(newLeague).subscribe((leagueFromDb: League) => {
       if(leagueFromDb) {

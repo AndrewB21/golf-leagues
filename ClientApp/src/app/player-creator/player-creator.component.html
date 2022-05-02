@@ -1,22 +1,22 @@
-<h1>Add a Player</h1>
-<form class="editor-form" [formGroup]="playerForm" (submit)="submitForm()">
+<h1>{{ isCreatingNewPlayer ? 'Add A' : 'Edit' }} Player</h1>
+<form class="editor-form" (submit)="submitForm()">
     <div class="form-group">
         <mat-form-field >
             <mat-label>First Name</mat-label>
-            <input matInput formControlName="firstName">
+            <input matInput [(ngModel)]="data.player!.firstName" name="first-name">
           </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field >
             <mat-label>Last Name</mat-label>
-            <input matInput formControlName="lastName">
+            <input matInput [(ngModel)]="data.player!.lastName" name="last-name">
           </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field >
             <mat-label>Handicap</mat-label>
-            <input matInput type="number" [min]="-18" [max]="18"formControlName="handicap">
+            <input matInput [(ngModel)]="data.player!.handicap" type="number" [min]="-18" [max]="18" name="handicap">
           </mat-form-field>
     </div>
-    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data.player">Submit {{ isCreatingNewPlayer ? 'New Player' : 'Changes' }}</button>
 </form>

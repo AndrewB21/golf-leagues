@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LeagueCreatorComponent } from '../league-creator/league-creator.component';
 import { League } from '../models/league.model';
 import { Player } from '../models/player.model';
@@ -14,29 +14,31 @@ import { PlayerService } from '../services/player.service';
 })
 export class PlayerCreatorComponent implements OnInit {
   @Output() public leagueSubmitted: EventEmitter<League> = new EventEmitter<League>();
-  public playerForm: FormGroup = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    handicap: new FormControl(0)
-  });
+  public isCreatingNewPlayer: boolean;
 
   constructor(
     public leagueService: LeagueService,
     private playerService: PlayerService,
-    public dialogRef: MatDialogRef<LeagueCreatorComponent> 
+    public dialogRef: MatDialogRef<LeagueCreatorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {league: League, player?: Player}
   ) {
+      this.isCreatingNewPlayer = this.data.player ? false : true;
+      if (!this.data.player) {
+        this.data.player = new Player('New', 'Player', 0);
+      }
   }
 
   ngOnInit(): void {
   }
 
   public submitForm () {
-    const formValues = this.playerForm.value;
-    const player: Player = new Player(formValues.firstName, formValues.lastName, formValues.handicap);
-    this.leagueService.getLeagueById(1).subscribe((league) => {
+    const player = this.data.player!;
+    this.leagueService.getLeagueById(this.data.league.id!).subscribe((league) => {
       player.leagues = [league]
       this.playerService.createPlayer(player).subscribe(playerFromDb => {
-        console.log(playerFromDb);
+        if (playerFromDb) {
+          this.dialogRef.close();
+        }
       });
     });
   }
