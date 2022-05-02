@@ -42,6 +42,24 @@ namespace golf_leagues_identity.Services
             this.dbContext.SaveChanges();
             return newPlayer;
         }
+
+        public Player UpdatePlayer(Player updatedPlayer)
+        {
+            Player playerInDb = this.dbContext.Player.First(p => p.Id == updatedPlayer.Id);
+            Console.WriteLine(playerInDb.Id);
+            this.dbContext.Entry(playerInDb).CurrentValues.SetValues(updatedPlayer);
+            this.dbContext.SaveChanges();
+            return updatedPlayer;
+        }
+
+        public Player RemovePlayerFromLeague(int playerId, int leagueId)
+        {
+            League league = this.dbContext.League.Include(l => l.Players).First(l => l.Id == leagueId);
+            Player player = this.dbContext.Player.First(p => p.Id == playerId);
+            league.Players.Remove(player);
+            this.dbContext.SaveChanges();
+            return player;
+        }
     }
 
     public interface IPlayerService
@@ -49,5 +67,7 @@ namespace golf_leagues_identity.Services
         List<Player> GetAll();
         Player GetPlayerById(int id);
         Player CreatePlayer(Player newPlayer);
+        Player UpdatePlayer(Player updatedPlayer);
+        Player RemovePlayerFromLeague(int playerId, int leagueId);
     }
 }

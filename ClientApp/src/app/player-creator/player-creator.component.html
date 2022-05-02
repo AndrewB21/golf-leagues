@@ -1,22 +1,25 @@
 <h1>{{ isCreatingNewPlayer ? 'Add A' : 'Edit' }} Player</h1>
-<form class="editor-form" (submit)="submitForm()">
+<form class="editor-form">
     <div class="form-group">
         <mat-form-field >
             <mat-label>First Name</mat-label>
-            <input matInput [(ngModel)]="data.player!.firstName" name="first-name">
+            <input matInput [(ngModel)]="playerToEdit.firstName" name="first-name">
           </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field >
             <mat-label>Last Name</mat-label>
-            <input matInput [(ngModel)]="data.player!.lastName" name="last-name">
+            <input matInput [(ngModel)]="playerToEdit.lastName" name="last-name">
           </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field >
             <mat-label>Handicap</mat-label>
-            <input matInput [(ngModel)]="data.player!.handicap" type="number" [min]="-18" [max]="18" name="handicap">
+            <input matInput [(ngModel)]="playerToEdit.handicap" type="number" [min]="-18" [max]="18" name="handicap">
           </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" [mat-dialog-close]="data.player">Submit {{ isCreatingNewPlayer ? 'New Player' : 'Changes' }}</button>
+    <div class="form-actions">
+        <button mat-raised-button color="primary" (click)="submitForm()" [mat-dialog-close]="data.league">Submit {{ isCreatingNewPlayer ? 'New Player' : 'Changes' }}</button>
+        <button *ngIf="!isCreatingNewPlayer" mat-raised-button color="warn" (click)="removePlayer()" [mat-dialog-close]="data.league">Remove Player</button>
+    </div>
 </form>

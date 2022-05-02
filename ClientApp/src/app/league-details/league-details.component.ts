@@ -32,7 +32,6 @@ export class LeagueDetailsComponent implements OnInit {
     this.league = this.route.snapshot.data['league'];
     this.players = new MatTableDataSource<Player>(this.league.players);
     this.events = new MatTableDataSource<LeagueEvent>(this.league.events);
-    console.log(this.league);
   }
 
   ngOnInit(): void {
@@ -48,14 +47,14 @@ export class LeagueDetailsComponent implements OnInit {
 
   public addPlayer() {
     const dialogRef = this.dialog.open(PlayerCreatorComponent, {
-      width: '300px',
+      width: '400px',
       data: { league: this.league }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.league.players.push(result);
-        this.players.data = this.league.players;
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      if (updatedLeague) {
+        this.league = updatedLeague;
+        this.players.data = updatedLeague.players;
       }
       console.log('The dialog was closed');
     });
@@ -63,14 +62,14 @@ export class LeagueDetailsComponent implements OnInit {
 
   public editPlayer(player: Player) {
     const dialogRef = this.dialog.open(PlayerCreatorComponent, {
-      width: '300px',
+      width: '400px',
       data: { league: this.league, player: player }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.league.players.push(result);
-        this.players.data = this.league.players;
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      if (updatedLeague) {
+        this.league = updatedLeague;
+        this.players.data = updatedLeague.players;
       }
       console.log('The dialog was closed');
     });
@@ -78,13 +77,13 @@ export class LeagueDetailsComponent implements OnInit {
 
   public addEvent() {
     const dialogRef = this.dialog.open(EventCreatorComponent, {
-      width: '300px',
+      width: '400px',
       data: { league: this.league, event: new LeagueEvent(new Date(), null, null) }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.league.events.push(result);
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      if (updatedLeague) {
+        this.league.events.push(updatedLeague);
         this.events.data = this.league.events;
       }
       console.log('The dialog was closed');
@@ -93,13 +92,13 @@ export class LeagueDetailsComponent implements OnInit {
 
   public editEvent(event: LeagueEvent) {
     const dialogRef = this.dialog.open(EventCreatorComponent, {
-      width: '300px',
+      width: '400px',
       data: { league: this.league, event: event }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.league.events.push(result);
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      if (updatedLeague) {
+        this.league.events.push(updatedLeague);
         this.events.data = this.league.events;
       }
       console.log('The dialog was closed');

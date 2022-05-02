@@ -35,4 +35,16 @@ public class PlayerController : Controller
     {
         return Ok(_playerService.CreatePlayer(newPlayer));
     }
+
+    [HttpPost("players/update")]
+    public IActionResult UpdatePlayer([FromBody] Player updatedPlayer)
+    {
+        return Ok(_playerService.UpdatePlayer(updatedPlayer));
+    }
+
+    [HttpDelete("players/remove/{playerId}/{leagueId}")]
+    public IActionResult RemovePlayerFromLeague(int playerId, int leagueId)
+    {
+        return Ok(_playerService.RemovePlayerFromLeague(playerId, leagueId));
+    }
 }

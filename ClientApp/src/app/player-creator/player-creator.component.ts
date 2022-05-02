@@ -15,6 +15,7 @@ import { PlayerService } from '../services/player.service';
 export class PlayerCreatorComponent implements OnInit {
   @Output() public leagueSubmitted: EventEmitter<League> = new EventEmitter<League>();
   public isCreatingNewPlayer: boolean;
+  public playerToEdit: Player;
 
   constructor(
     public leagueService: LeagueService,
@@ -23,23 +24,47 @@ export class PlayerCreatorComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: {league: League, player?: Player}
   ) {
       this.isCreatingNewPlayer = this.data.player ? false : true;
+      console.log(this.isCreatingNewPlayer);
       if (!this.data.player) {
         this.data.player = new Player('New', 'Player', 0);
       }
+      this.playerToEdit = {...this.data.player!}
+      this.playerToEdit.id = this.data.player.id;
   }
 
   ngOnInit(): void {
   }
 
   public submitForm () {
-    const player = this.data.player!;
-    this.leagueService.getLeagueById(this.data.league.id!).subscribe((league) => {
-      player.leagues = [league]
-      this.playerService.createPlayer(player).subscribe(playerFromDb => {
-        if (playerFromDb) {
-          this.dialogRef.close();
+    if (this.isCreatingNewPlayer) {
+      this.leagueService.getLeagueById(this.data.league.id!).subscribe((league) => {
+        this.playerToEdit.leagues = [league]
+        this.playerService.createPlayer(this.playerToEdit).subscribe(playerFromDb => {
+          if (playerFromDb) {
+            // Update the client side league so changes are reflected
+            this.data.league.players.push(playerFromDb);
+            console.log(this.data.league);
+          }
+        });
+      });
+    } else {
+      this.playerService.updatePlayer(this.playerToEdit).subscribe(playerFromDb => {
+        if(playerFromDb) {
+          // Update the client side league so changes are reflected
+          const playerIndex = this.data.league.players.findIndex(p => p.id == playerFromDb.id);
+          this.data.league.players[playerIndex] = playerFromDb;
         }
       });
-    });
+    }
+  }
+
+  public removePlayer() {
+    const deleteConfirm = confirm(`This will remove ${this.data.player!.firstName} ${this.data.player!.lastName} from this league. Press OK to continue.`)
+    if (deleteConfirm) {
+      this.playerService.removePlayerFromLeague(this.data.player!.id!, this.data.league.id!).subscribe(playerFromDb => {
+        const playerIndex = this.data.league.players.findIndex(p => p.id == playerFromDb.id);
+        this.data.league.players.splice(playerIndex, 1);
+      });
+    }
   }
 }

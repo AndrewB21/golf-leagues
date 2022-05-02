@@ -30,4 +30,20 @@ export class PlayerService {
       }
     )
   }
+
+  public updatePlayer(updatedPlayer: Player): Observable<Player> {
+    return this.httpClient.post<Player>(
+      `/players/update`,
+      updatedPlayer,
+      {
+        headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        })
+      }
+    );
+  }
+
+  public removePlayerFromLeague(playerId: number, leagueId: number) {
+    return this.httpClient.delete<Player>(`/players/remove/${playerId}/${leagueId}`);
+  }
 }
