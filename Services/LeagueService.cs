@@ -13,12 +13,12 @@ namespace golf_leagues_identity.Services
 
         public List<League> GetAll()
         {
-            return this.dbContext.League.Include(l => l.Players).ToList();
+            return this.dbContext.League.Include(l => l.Players).Include(l => l.Events).ThenInclude(e => e.Course).ToList();
         }
 
          public League GetLeagueById(int id)
         {
-            return this.dbContext.League.Include(l => l.Players).FirstOrDefault(l => l.Id == id);
+            return this.dbContext.League.Include(l => l.Players).Include(l => l.Events).ThenInclude(e => e.Course).FirstOrDefault(l => l.Id == id);
         }
 
         public League CreateLeague(League newLeague)

@@ -8,4 +8,5 @@ public class League
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public virtual ICollection<Player> Players { get; set; }
+    public virtual ICollection<Event> Events { get; set; }
 }
