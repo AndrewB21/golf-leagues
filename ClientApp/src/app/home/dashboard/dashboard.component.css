@@ -1,10 +1,13 @@
 .table-container {
-    margin: 0 auto;
     width: 40%
 }
 
 table {
     width: 100%;
+}
+
+.table-container button {
+    margin-top: 15px;
 }
 
 ::ng-deep .mat-row {

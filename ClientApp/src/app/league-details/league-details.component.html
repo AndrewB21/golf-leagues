@@ -1,9 +1,33 @@
-<h1>{{ league.name }} <span class="date-range">({{ moment(league.startDate).format('MM-DD-YY') }} - {{ moment(league.endDate).format('MM-DD-YY') }})</span></h1>
-<h2>{{ league.description }}</h2>
+<div class="league-header">
+    <h1>{{ league.name }} <span class="date-range">({{ moment(league.startDate).format('MM-DD-YY') }} - {{ moment(league.endDate).format('MM-DD-YY') }})</span></h1>
+    <p>{{ league.description }}</p>
+</div>
+<div class="table-container">
+    <h2>Players</h2>
+    <table mat-table [dataSource]="players" class="mat-elevation-z8">
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
 
-<ul>
-    <li *ngFor="let player of league.players">
-        {{ player.firstName }}
-    </li>
-</ul>
-<button mat-raised-button color="secondary" (click)="addPlayer()">Add Player</button>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let player">{{ player.firstName + ' ' + player.lastName }}</td>
+        </ng-container>
+
+        <!-- Handicap Column -->
+        <ng-container matColumnDef="handicap">
+        <th mat-header-cell *matHeaderCellDef>Handicap</th>
+        <td mat-cell *matCellDef="let player"> {{ player.handicap }} </td>
+        </ng-container>
+
+        <!-- Points Column -->
+        <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef>Points</th>
+            <td mat-cell *matCellDef="let player"> 0 </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <button mat-raised-button color="secondary" (click)="addPlayer()">Add Player</button>
+  </div>

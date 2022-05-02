@@ -1,5 +1,7 @@
 <div class="dashboard">
+  <h1>League Manager Dashboard</h1>
   <div class="table-container">
+    <h2>Leagues</h2>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
@@ -34,7 +36,5 @@
     </table>
     <button mat-raised-button color="primary" (click)="openDialog()">Create A League</button>
   </div>
-  <button mat-raised-button color="primary" (click)="openPlayerDialog()">Create A Player</button>
-
 </div>
   

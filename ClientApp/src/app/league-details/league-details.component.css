@@ -4,3 +4,25 @@
     display: inline-block;
     margin-left: 10px;
 }
+
+.league-header h1 {
+    margin-bottom: 5px;
+}
+
+.table-container {
+    margin-top: 40px;
+    width: 300px;
+}
+
+.table-container h2 {
+    margin-bottom: 5px;
+}
+
+.table-container table {
+    width: 100%;
+}
+
+.table-container button {
+    margin-top: 10px;
+    float: right;
+}
