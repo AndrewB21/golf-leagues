@@ -1,6 +1,10 @@
-<div class="league-header">
-    <h1>{{ league.name }} <span class="date-range">({{ moment(league.startDate).format('MM-DD-YY') }} - {{ moment(league.endDate).format('MM-DD-YY') }})</span></h1>
-    <p>{{ league.description }}</p>
+
+<div class="league-header" fxLayout="row">
+    <div class="league-info">
+        <h1>{{ league.name }} <span class="date-range">({{ moment(league.startDate).format('MM-DD-YY') }} - {{ moment(league.endDate).format('MM-DD-YY') }})</span></h1>
+        <p>{{ league.description }}</p>
+    </div>
+    <button fxFlexAlign="center" mat-raised-button class="delete-button" color="warn" (click)="deleteLeague()">Delete League</button>
 </div>
 <div class="table-container">
     <h2>Players</h2>
@@ -23,7 +27,7 @@
         <!-- Points Column -->
         <ng-container matColumnDef="points">
             <th mat-header-cell *matHeaderCellDef>Points</th>
-            <td mat-cell *matCellDef="let player"> 0 </td>
+            <td mat-cell *matCellDef="let player"> {{ getPointsForPlayer(player) }} </td>
         </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="playerColumns"></tr>

@@ -13,12 +13,22 @@ namespace golf_leagues_identity.Services
 
         public List<League> GetAll()
         {
-            return this.dbContext.League.Include(l => l.Players).Include(l => l.Events).ThenInclude(e => e.Course).ToList();
+            return this.dbContext.League
+                .Include(l => l.Players)
+                .ThenInclude(p => p.PlayerPoints)
+                .Include(l => l.Events)
+                .ThenInclude(e => e.Course)
+                .ToList();
         }
 
          public League GetLeagueById(int id)
         {
-            return this.dbContext.League.Include(l => l.Players).Include(l => l.Events).ThenInclude(e => e.Course).FirstOrDefault(l => l.Id == id);
+            return this.dbContext.League
+                .Include(l => l.Players)
+                .ThenInclude(p => p.PlayerPoints)
+                .Include(l => l.Events)
+                .ThenInclude(e => e.Course)
+                .First(l => l.Id == id);
         }
 
         public League CreateLeague(League newLeague)
@@ -27,6 +37,14 @@ namespace golf_leagues_identity.Services
             this.dbContext.SaveChanges();
             return newLeague;
         }
+
+        public League DeleteLeague(int leagueId)
+        {
+            League leagueInDb = this.dbContext.League.FirstOrDefault(l => l.Id == leagueId);
+            this.dbContext.League.Remove(leagueInDb);
+            this.dbContext.SaveChanges();
+            return leagueInDb;
+        }
     }
 
     public interface ILeagueService
@@ -34,5 +52,6 @@ namespace golf_leagues_identity.Services
         List<League> GetAll();
         League GetLeagueById(int id);
         League CreateLeague(League newLeague);
+        League DeleteLeague(int leagueId);
     }
 }

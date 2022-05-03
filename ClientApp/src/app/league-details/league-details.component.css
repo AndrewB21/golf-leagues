@@ -9,6 +9,16 @@
     margin-bottom: 5px;
 }
 
+.league-info {
+    max-width: 30%;
+}
+
+.delete-button {
+    margin-left: 30px;
+    max-width: 130px;
+    max-height: 40px;
+}
+
 .table-container {
     margin-top: 40px;
     width: 300px;

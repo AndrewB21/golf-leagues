@@ -4,8 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LeagueCreatorComponent } from '../league-creator/league-creator.component';
 import { League } from '../models/league.model';
 import { Player } from '../models/player.model';
+import { PlayerPoints } from '../models/playerpoints.model';
 import { LeagueService } from '../services/league.service';
 import { PlayerService } from '../services/player.service';
+import { cloneDeep } from 'lodash-es'
 
 @Component({
   selector: 'app-player-creator',
@@ -16,6 +18,7 @@ export class PlayerCreatorComponent implements OnInit {
   @Output() public leagueSubmitted: EventEmitter<League> = new EventEmitter<League>();
   public isCreatingNewPlayer: boolean;
   public playerToEdit: Player;
+  public playerPoints!: PlayerPoints;
 
   constructor(
     public leagueService: LeagueService,
@@ -24,18 +27,22 @@ export class PlayerCreatorComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: {league: League, player?: Player}
   ) {
       this.isCreatingNewPlayer = this.data.player ? false : true;
-      console.log(this.isCreatingNewPlayer);
       if (!this.data.player) {
+        console.log('here');
         this.data.player = new Player('New', 'Player', 0);
+        this.data.player.playerPoints = [new PlayerPoints(this.data.league.id!, 0)]
       }
-      this.playerToEdit = {...this.data.player!}
-      this.playerToEdit.id = this.data.player.id;
+      this.playerToEdit = cloneDeep(this.data.player);
+      this.playerPoints = this.playerToEdit.playerPoints?.find(el => el.leagueId === this.data.league.id)!;
+      console.log(this.playerToEdit);
+      
   }
 
   ngOnInit(): void {
   }
 
   public submitForm () {
+    console.log(this.playerToEdit);
     if (this.isCreatingNewPlayer) {
       this.leagueService.getLeagueById(this.data.league.id!).subscribe((league) => {
         this.playerToEdit.leagues = [league]

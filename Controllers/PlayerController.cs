@@ -47,4 +47,10 @@ public class PlayerController : Controller
     {
         return Ok(_playerService.RemovePlayerFromLeague(playerId, leagueId));
     }
+
+    [HttpDelete("players/delete/{playerId}")]
+    public IActionResult DeletePlayer(int playerId)
+    {
+        return Ok(_playerService.DeletePlayer(playerId));
+    }
 }

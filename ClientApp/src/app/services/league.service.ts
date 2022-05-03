@@ -29,4 +29,8 @@ export class LeagueService {
       }
     )
   }
+
+  public deleteLeague(leagueId: number): Observable<League> {
+    return this.httpClient.delete<League>(`/leagues/delete/${leagueId}`);
+  }
 }

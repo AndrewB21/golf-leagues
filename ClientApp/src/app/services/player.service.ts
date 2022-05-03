@@ -46,4 +46,8 @@ export class PlayerService {
   public removePlayerFromLeague(playerId: number, leagueId: number) {
     return this.httpClient.delete<Player>(`/players/remove/${playerId}/${leagueId}`);
   }
+
+  public deletePlayer(playerId: number) {
+    return this.httpClient.delete<Player>(`/players/delete/${playerId}`);
+  }
 }

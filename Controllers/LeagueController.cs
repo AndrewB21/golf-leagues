@@ -35,4 +35,10 @@ public class LeagueController : Controller
     {
         return Ok(_leagueService.CreateLeague(newLeague));
     }
+
+    [HttpDelete("leagues/delete/{leagueId}")]
+    public IActionResult DeleteLeague(int leagueId)
+    {
+        return Ok(_leagueService.DeleteLeague(leagueId));
+    }
 }

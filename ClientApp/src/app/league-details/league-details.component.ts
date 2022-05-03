@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { EventCreatorComponent } from '../event-creator/event-creator.component';
 import { LeagueEvent } from '../models/league-event.model';
@@ -26,6 +26,7 @@ export class LeagueDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     public dialog: MatDialog,
     private leagueService: LeagueService
   ) { 
@@ -53,6 +54,7 @@ export class LeagueDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(updatedLeague => {
       if (updatedLeague) {
+        console.log('updated league', updatedLeague);
         this.league = updatedLeague;
         this.players.data = updatedLeague.players;
       }
@@ -103,6 +105,22 @@ export class LeagueDetailsComponent implements OnInit {
       }
       console.log('The dialog was closed');
     });
+  }
+
+  public deleteLeague() {
+    const deleteConfirmed = confirm("This will delete the league and all data associated with it. Press OK to continue.");
+    if (deleteConfirmed) {
+      this.leagueService.deleteLeague(this.league.id!).subscribe((deletedLeague) => {
+        if (deletedLeague) {
+          console.log(`${deletedLeague.name} deleted successfully.`);
+          this.router.navigateByUrl('/dashboard');
+        }
+      });
+    }
+  }
+
+  public getPointsForPlayer(player: Player) {
+    return player.playerPoints?.find(el => el.leagueId = this.league.id!)?.points;
   }
 
 }

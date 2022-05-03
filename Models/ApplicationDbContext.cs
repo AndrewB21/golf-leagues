@@ -43,6 +43,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
             .Property(p => p.FirstName).HasMaxLength(30);
         builder.Entity<Player>()
             .Property(p => p.LastName).HasMaxLength(30);
+        builder.Entity<Player>()
+            .HasMany(p => p.PlayerPoints)
+            .WithOne(p => p.Player);
         
         builder.Entity<Event>()
             .HasKey(e => e.Id);
@@ -61,4 +64,5 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     public DbSet<Player> Player { get; set; }
     public DbSet<Event> Event { get; set; }
     public DbSet<Course> Course { get; set; }
+    public DbSet<PlayerPoints> PlayerPoints { get; set; }
 }
