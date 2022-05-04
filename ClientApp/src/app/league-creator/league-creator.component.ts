@@ -9,7 +9,7 @@ import { LeagueService } from '../services/league.service';
   templateUrl: './league-creator.component.html',
   styleUrls: ['./league-creator.component.css']
 })
-export class LeagueCreatorComponent implements OnInit {
+export class LeagueCreatorComponent {
   @Output() public leagueSubmitted: EventEmitter<League> = new EventEmitter<League>();
   public minDate: Date;
   public maxEndDate: Date;
@@ -27,9 +27,6 @@ export class LeagueCreatorComponent implements OnInit {
     this.minDate = new Date();
     this.maxEndDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDate());
     console.log(this.maxEndDate);
-  }
-
-  ngOnInit(): void {
   }
 
   public submitForm () {

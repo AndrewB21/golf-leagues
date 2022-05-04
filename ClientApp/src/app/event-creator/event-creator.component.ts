@@ -14,7 +14,7 @@ import { EventService } from '../services/event.service';
   templateUrl: './event-creator.component.html',
   styleUrls: ['./event-creator.component.css']
 })
-export class EventCreatorComponent implements OnInit {
+export class EventCreatorComponent {
   @Output() public eventSubmitted: EventEmitter<LeagueEvent> = new EventEmitter<LeagueEvent>();
   public minDate: Date = new Date();
   public courses: Course[] = [];
@@ -35,9 +35,6 @@ export class EventCreatorComponent implements OnInit {
     });
     this.isCreatingNewEvent = this.data.event.id ? false : true;
     this.eventToEdit = cloneDeep(this.data.event);
-  }
-
-  ngOnInit(): void {
   }
 
   public submitForm () {

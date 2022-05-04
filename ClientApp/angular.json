@@ -127,9 +127,21 @@
               "vendorChunk": false
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "golf_leagues_identity"
+  "defaultProject": "golf_leagues_identity",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

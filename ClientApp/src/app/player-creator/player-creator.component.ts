@@ -14,7 +14,7 @@ import { cloneDeep } from 'lodash-es'
   templateUrl: './player-creator.component.html',
   styleUrls: ['./player-creator.component.css']
 })
-export class PlayerCreatorComponent implements OnInit {
+export class PlayerCreatorComponent {
   @Output() public leagueSubmitted: EventEmitter<League> = new EventEmitter<League>();
   public isCreatingNewPlayer: boolean;
   public playerToEdit: Player;
@@ -35,9 +35,6 @@ export class PlayerCreatorComponent implements OnInit {
       this.playerPoints = this.playerToEdit.playerPoints?.find(el => el.leagueId === this.data.league.id)!;
       console.log(this.playerToEdit);
       
-  }
-
-  ngOnInit(): void {
   }
 
   public submitForm () {

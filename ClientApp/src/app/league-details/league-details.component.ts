@@ -17,7 +17,7 @@ import { LeagueService } from '../services/league.service';
   templateUrl: './league-details.component.html',
   styleUrls: ['./league-details.component.css']
 })
-export class LeagueDetailsComponent implements OnInit {
+export class LeagueDetailsComponent {
   public league: League;
   public players: MatTableDataSource<Player>;
   public playerColumns: string[] = ['name', 'handicap', 'points'];
@@ -34,9 +34,6 @@ export class LeagueDetailsComponent implements OnInit {
     this.league = this.route.snapshot.data['league'];
     this.players = new MatTableDataSource<Player>(this.league.players);
     this.events = new MatTableDataSource<LeagueEvent>(this.league.events);
-  }
-
-  ngOnInit(): void {
   }
 
   public refreshLeague() {
