@@ -1,3 +1,5 @@
+import { Course } from "./course.model";
+
 export class LeagueEvent {
     constructor(
         date: Date,
@@ -13,4 +15,5 @@ export class LeagueEvent {
     public date: Date;
     public courseId: number | null;
     public leagueId: number | null;
+    public course?: Course;
 }

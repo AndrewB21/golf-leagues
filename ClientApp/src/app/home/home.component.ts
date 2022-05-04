@@ -7,14 +7,17 @@ import { AuthorizeService } from 'src/api-authorization/authorize.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
+  public isAuthenticated!: boolean;
   
-  constructor(private authorizeService: AuthorizeService, private router: Router) { }
-
-  ngOnInit(): void {
+  constructor(private authorizeService: AuthorizeService, private router: Router) { 
     this.authorizeService.isAuthenticated().subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
       if (isAuthenticated) {
         this.router.navigateByUrl('/dashboard');
-      }
+      } 
     });
+  }
+
+  ngOnInit(): void {
   }
 }

@@ -11,6 +11,7 @@
 
 .league-info {
     max-width: 30%;
+    position: relative;
 }
 
 .delete-button {
@@ -21,7 +22,7 @@
 
 .table-container {
     margin-top: 40px;
-    width: 300px;
+    width: 600px;
 }
 
 .table-container h2 {
@@ -34,5 +35,21 @@
 
 .table-container button {
     margin-top: 10px;
-    float: right;
+    /* float: right; */
+}
+
+.mat-icon {
+    cursor: pointer;
+}
+
+#edit-league-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+#delete-league-btn {
+    position: absolute;
+    top: 40px;
+    right: 5px;
 }

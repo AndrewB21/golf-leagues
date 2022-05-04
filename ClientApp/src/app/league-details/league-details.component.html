@@ -1,10 +1,12 @@
 
 <div class="league-header" fxLayout="row">
-    <div class="league-info">
+    <div fxFlex="30%" class="league-info">
         <h1>{{ league.name }} <span class="date-range">({{ moment(league.startDate).format('MM-DD-YY') }} - {{ moment(league.endDate).format('MM-DD-YY') }})</span></h1>
         <p>{{ league.description }}</p>
+        <mat-icon id="edit-league-btn">edit</mat-icon>
+        <mat-icon id="delete-league-btn" (click)="deleteLeague()">delete</mat-icon>
     </div>
-    <button fxFlexAlign="center" mat-raised-button class="delete-button" color="warn" (click)="deleteLeague()">Delete League</button>
+    <!-- <button fxFlexAlign="center" mat-raised-button class="delete-button" color="warn" >Delete League</button> -->
 </div>
 <div class="table-container">
     <h2>Players</h2>

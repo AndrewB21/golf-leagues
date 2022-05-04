@@ -28,7 +28,6 @@ export class PlayerCreatorComponent implements OnInit {
   ) {
       this.isCreatingNewPlayer = this.data.player ? false : true;
       if (!this.data.player) {
-        console.log('here');
         this.data.player = new Player('New', 'Player', 0);
         this.data.player.playerPoints = [new PlayerPoints(this.data.league.id!, 0)]
       }

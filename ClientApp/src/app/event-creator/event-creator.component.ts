@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { cloneDeep } from 'lodash-es';
 import { LeagueCreatorComponent } from '../league-creator/league-creator.component';
 import { Course } from '../models/course.model';
 import { LeagueEvent } from '../models/league-event.model';
@@ -19,6 +20,7 @@ export class EventCreatorComponent implements OnInit {
   public courses: Course[] = [];
   public filteredCourses: Course[] = [];
   public isCreatingNewEvent: boolean;
+  public eventToEdit: LeagueEvent;
 
   constructor(
     private eventService: EventService,
@@ -32,23 +34,30 @@ export class EventCreatorComponent implements OnInit {
       this.filteredCourses = courses;
     });
     this.isCreatingNewEvent = this.data.event.id ? false : true;
+    this.eventToEdit = cloneDeep(this.data.event);
   }
 
   ngOnInit(): void {
   }
 
   public submitForm () {
-    const newEvent = this.data.event;
-    newEvent.leagueId = this.data.league.id!;
-    console.log(newEvent);
-    try {
-      this.eventService.createEvent(newEvent).subscribe((eventFromDb: LeagueEvent) => {
-      if(eventFromDb) {
-        this.dialogRef.close();
+    if (this.isCreatingNewEvent) {
+      this.eventToEdit.leagueId = this.data.league.id!;
+      try {
+        this.eventService.createEvent(this.eventToEdit).subscribe((eventFromDb: LeagueEvent) => {
+        if(eventFromDb) {
+          this.eventToEdit.course = eventFromDb.course;
+        }
+        });
+      } catch {
+        console.warn("An error occurred while submitting a league.")
       }
-      });
-    } catch {
-      console.warn("An error occurred while submitting a league.")
+    } else {
+      this.eventService.updateEvent(this.eventToEdit).subscribe((eventFromDb: LeagueEvent) => {
+        if (eventFromDb) {
+          this.eventToEdit.course = eventFromDb.course;
+        }
+      })
     }
   }
 

@@ -24,8 +24,14 @@ public class EventController : Controller
     }
 
     [HttpPost("events/create")]
-    public IActionResult CreateLeague([FromBody] Event newEvent)
+    public IActionResult CreateEvent([FromBody] Event newEvent)
     {
         return Ok(_eventService.CreateEvent(newEvent));
+    }
+
+    [HttpPut("events/update")]
+    public IActionResult UpdateEvent([FromBody] Event updatedEvent)
+    {
+        return Ok(_eventService.UpdateEvent(updatedEvent));
     }
 }

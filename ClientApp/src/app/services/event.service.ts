@@ -23,4 +23,16 @@ export class EventService {
       }
     )
   }
+
+  public updateEvent(updatedEvent: LeagueEvent): Observable<LeagueEvent> {
+    return this.httpClient.put<LeagueEvent>(
+      '/events/update',
+      updatedEvent,
+      {
+        headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        })
+      }
+    )
+  }
 }

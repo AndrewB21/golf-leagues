@@ -3,7 +3,7 @@
     <div class="form-group">
         <mat-form-field >
             <mat-label>Event Date</mat-label>
-            <input matInput [(ngModel)]="data.event.date" [min]="minDate" [matDatepicker]="date" name="date">
+            <input matInput [(ngModel)]="eventToEdit.date" [min]="minDate" [matDatepicker]="date" name="date">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
             <mat-datepicker #date></mat-datepicker>
@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         <mat-form-field>
-            <mat-select [(ngModel)]="data.event.courseId" name="course">
+            <mat-select [(ngModel)]="eventToEdit.courseId" name="course">
                 <mat-select-filter [array]="courses" (filteredReturn)="filteredCourses = $event" [displayMember]="'name'"></mat-select-filter>
                 <mat-option *ngFor="let course of filteredCourses" [value]="course.id">
                   {{course.name}}
@@ -19,5 +19,5 @@
               </mat-select>
           </mat-form-field>
     </div>
-    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button color="primary" (click)="submitForm()" [mat-dialog-close]="eventToEdit">Submit</button>
 </form>

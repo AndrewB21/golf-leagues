@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
 import { EventCreatorComponent } from '../event-creator/event-creator.component';
 import { LeagueEvent } from '../models/league-event.model';
 import { League } from '../models/league.model';
@@ -83,10 +84,22 @@ export class LeagueDetailsComponent implements OnInit {
       data: { league: this.league, event: new LeagueEvent(new Date(), null, null) }
     });
 
-    dialogRef.afterClosed().subscribe(updatedLeague => {
-      if (updatedLeague) {
-        this.league.events.push(updatedLeague);
-        this.events.data = this.league.events;
+    dialogRef.afterClosed().subscribe(newEvent => {
+      if (newEvent) {
+        // Wait for the new event to be submitted and returned with course info
+        const eventWithCourseObserver = new Observable<LeagueEvent>(subscriber => {
+          setInterval(() => {
+            if (newEvent.course != null) {
+              subscriber.next(newEvent);
+              subscriber.complete();
+            }
+          }, 200);
+        });
+        // Add the event to the data array
+        eventWithCourseObserver.subscribe((eventWithCourse: LeagueEvent) => {
+          this.league.events.push(eventWithCourse);
+          this.events.data = this.league.events;
+        });
       }
       console.log('The dialog was closed');
     });
@@ -98,9 +111,10 @@ export class LeagueDetailsComponent implements OnInit {
       data: { league: this.league, event: event }
     });
 
-    dialogRef.afterClosed().subscribe(updatedLeague => {
-      if (updatedLeague) {
-        this.league.events.push(updatedLeague);
+    dialogRef.afterClosed().subscribe(updatedEvent => {
+      if (updatedEvent) {
+        const eventIndex = this.league.events.findIndex(el => el.id === updatedEvent.id)!;
+        this.league.events[eventIndex] = updatedEvent;
         this.events.data = this.league.events;
       }
       console.log('The dialog was closed');
