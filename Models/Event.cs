@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-namespace golf_leagues_identity.Models;
 
 public class Event
 {

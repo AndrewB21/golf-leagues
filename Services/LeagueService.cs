@@ -1,5 +1,3 @@
-using golf_leagues_identity.Models;
-using Microsoft.EntityFrameworkCore;
 namespace golf_leagues_identity.Services
 {
     public class LeagueService : ILeagueService

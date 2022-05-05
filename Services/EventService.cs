@@ -1,7 +1,3 @@
-using golf_leagues_identity.Models;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
 namespace golf_leagues_identity.Services
 {
     public class EventService : IEventService
