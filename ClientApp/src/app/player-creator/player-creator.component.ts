@@ -34,7 +34,6 @@ export class PlayerCreatorComponent {
       this.playerToEdit = cloneDeep(this.data.player);
       this.playerPoints = this.playerToEdit.playerPoints?.find(el => el.leagueId === this.data.league.id)!;
       console.log(this.playerToEdit);
-      
   }
 
   public submitForm () {

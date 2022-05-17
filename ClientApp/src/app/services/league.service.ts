@@ -30,6 +30,18 @@ export class LeagueService {
     )
   }
 
+  public updateLeague(updatedLeague: League): Observable<League> {
+    return this.httpClient.put<League>(
+      '/leagues/update',
+      updatedLeague,
+      {
+        headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        })
+      }
+    )
+  }
+
   public deleteLeague(leagueId: number): Observable<League> {
     return this.httpClient.delete<League>(`/leagues/delete/${leagueId}`);
   }

@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Mvc;
-using golf_leagues_identity.Services;
-using golf_leagues_identity.Models;
 
 namespace golf_leagues_identity.Controllers;
 
@@ -34,6 +31,12 @@ public class LeagueController : Controller
     public IActionResult CreateLeague([FromBody] League newLeague)
     {
         return Ok(_leagueService.CreateLeague(newLeague));
+    }
+
+    [HttpPut("leagues/update")]
+    public IActionResult UpdateLeague([FromBody] League updatedLeague)
+    {
+        return Ok(_leagueService.UpdateLeague(updatedLeague));
     }
 
     [HttpDelete("leagues/delete/{leagueId}")]

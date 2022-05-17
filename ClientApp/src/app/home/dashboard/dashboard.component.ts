@@ -48,8 +48,17 @@ export class DashboardComponent implements OnInit {
       this.updateLeagueDataSource();
     });
   }
-
-  openPlayerDialog(): void {
-
+  
+  public deleteLeague(league: League) {
+    const deleteConfirmed = confirm("This will delete the league and all data associated with it. Press OK to continue.");
+    if (deleteConfirmed) {
+      this.leagueService.deleteLeague(league.id!).subscribe((deletedLeague) => {
+        if (deletedLeague) {
+          console.log(`${deletedLeague.name} deleted successfully.`);
+          const deletedLeagueIndex = this.dataSource.data.findIndex(el => el.id == league.id);
+          this.dataSource.data.slice(deletedLeagueIndex, 1);
+        }
+      });
+    }
   }
 }

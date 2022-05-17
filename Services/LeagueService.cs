@@ -36,6 +36,14 @@ namespace golf_leagues_identity.Services
             return newLeague;
         }
 
+        public League UpdateLeague(League updatedLeague)
+        {
+            League leagueInDb = GetLeagueById(updatedLeague.Id);
+            this.dbContext.Entry(leagueInDb).CurrentValues.SetValues(updatedLeague);
+            this.dbContext.SaveChanges();
+            return leagueInDb;
+        }
+
         public League DeleteLeague(int leagueId)
         {
             League leagueInDb = this.dbContext.League.FirstOrDefault(l => l.Id == leagueId);
@@ -50,6 +58,7 @@ namespace golf_leagues_identity.Services
         List<League> GetAll();
         League GetLeagueById(int id);
         League CreateLeague(League newLeague);
+        League UpdateLeague(League updatedLeague);
         League DeleteLeague(int leagueId);
     }
 }

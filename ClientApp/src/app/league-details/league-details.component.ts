@@ -6,11 +6,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { EventCreatorComponent } from '../event-creator/event-creator.component';
+import { LeagueCreatorComponent } from '../league-creator/league-creator.component';
 import { LeagueEvent } from '../models/league-event.model';
 import { League } from '../models/league.model';
 import { Player } from '../models/player.model';
 import { PlayerCreatorComponent } from '../player-creator/player-creator.component';
 import { LeagueService } from '../services/league.service';
+import { PlayerService } from '../services/player.service';
 
 @Component({
   selector: 'app-league-details',
@@ -20,7 +22,7 @@ import { LeagueService } from '../services/league.service';
 export class LeagueDetailsComponent {
   public league: League;
   public players: MatTableDataSource<Player>;
-  public playerColumns: string[] = ['name', 'handicap', 'points'];
+  public playerColumns: string[] = ['name', 'handicap', 'points', 'actions'];
   public events: MatTableDataSource<LeagueEvent>;
   public eventColumns: string[] = ['date', 'course'];
   public moment = moment;
@@ -29,7 +31,8 @@ export class LeagueDetailsComponent {
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
-    private leagueService: LeagueService
+    private leagueService: LeagueService,
+    private playerService: PlayerService
   ) { 
     this.league = this.route.snapshot.data['league'];
     this.players = new MatTableDataSource<Player>(this.league.players);
@@ -39,83 +42,16 @@ export class LeagueDetailsComponent {
   public refreshLeague() {
     this.leagueService.getLeagueById(this.league.id!).subscribe(league => {
       this.league = league;
-      this.players = new MatTableDataSource<Player>(this.league.players);
-      this.events = new MatTableDataSource<LeagueEvent>(this.league.events);
+      this.players.data = this.league.players;
+      this.events.data = this.league.events;
     })
   }
 
-  public addPlayer() {
-    const dialogRef = this.dialog.open(PlayerCreatorComponent, {
+  public updateLeague() {
+    const dialogRef = this.dialog.open(LeagueCreatorComponent, {
       width: '400px',
-      data: { league: this.league }
-    });
-
-    dialogRef.afterClosed().subscribe(updatedLeague => {
-      if (updatedLeague) {
-        console.log('updated league', updatedLeague);
-        this.league = updatedLeague;
-        this.players.data = updatedLeague.players;
-      }
-      console.log('The dialog was closed');
-    });
-  }
-
-  public editPlayer(player: Player) {
-    const dialogRef = this.dialog.open(PlayerCreatorComponent, {
-      width: '400px',
-      data: { league: this.league, player: player }
-    });
-
-    dialogRef.afterClosed().subscribe(updatedLeague => {
-      if (updatedLeague) {
-        this.league = updatedLeague;
-        this.players.data = updatedLeague.players;
-      }
-      console.log('The dialog was closed');
-    });
-  }
-
-  public addEvent() {
-    const dialogRef = this.dialog.open(EventCreatorComponent, {
-      width: '400px',
-      data: { league: this.league, event: new LeagueEvent(new Date(), null, null) }
-    });
-
-    dialogRef.afterClosed().subscribe(newEvent => {
-      if (newEvent) {
-        // Wait for the new event to be submitted and returned with course info
-        const eventWithCourseObserver = new Observable<LeagueEvent>(subscriber => {
-          setInterval(() => {
-            if (newEvent.course != null) {
-              subscriber.next(newEvent);
-              subscriber.complete();
-            }
-          }, 200);
-        });
-        // Add the event to the data array
-        eventWithCourseObserver.subscribe((eventWithCourse: LeagueEvent) => {
-          this.league.events.push(eventWithCourse);
-          this.events.data = this.league.events;
-        });
-      }
-      console.log('The dialog was closed');
-    });
-  }
-
-  public editEvent(event: LeagueEvent) {
-    const dialogRef = this.dialog.open(EventCreatorComponent, {
-      width: '400px',
-      data: { league: this.league, event: event }
-    });
-
-    dialogRef.afterClosed().subscribe(updatedEvent => {
-      if (updatedEvent) {
-        const eventIndex = this.league.events.findIndex(el => el.id === updatedEvent.id)!;
-        this.league.events[eventIndex] = updatedEvent;
-        this.events.data = this.league.events;
-      }
-      console.log('The dialog was closed');
-    });
+      data: { league: this.league, isEditing: true }
+    })
   }
 
   public deleteLeague() {
@@ -130,8 +66,62 @@ export class LeagueDetailsComponent {
     }
   }
 
+  public addPlayer() {
+    const dialogRef = this.dialog.open(PlayerCreatorComponent, {
+      width: '400px',
+      data: { league: this.league }
+    });
+
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      this.refreshLeague();
+    });
+  }
+
+  public editPlayer(player: Player) {
+    const dialogRef = this.dialog.open(PlayerCreatorComponent, {
+      width: '400px',
+      data: { league: this.league, player: player }
+    });
+
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      this.refreshLeague();
+    });
+  }
+
+  public addEvent() {
+    const dialogRef = this.dialog.open(EventCreatorComponent, {
+      width: '400px',
+      data: { league: this.league, event: new LeagueEvent(new Date(), null, null) }
+    });
+
+    dialogRef.afterClosed().subscribe(newEvent => {
+      this.refreshLeague();
+      console.log('The dialog was closed');
+    });
+  }
+
+  public editEvent(event: LeagueEvent) {
+    const dialogRef = this.dialog.open(EventCreatorComponent, {
+      width: '400px',
+      data: { league: this.league, event: event }
+    });
+
+    dialogRef.afterClosed().subscribe(updatedEvent => {
+      this.refreshLeague();
+    });
+  }
+
   public getPointsForPlayer(player: Player) {
     return player.playerPoints?.find(el => el.leagueId = this.league.id!)?.points;
   }
 
+  public removePlayer(player: Player) {
+    const deleteConfirm = confirm(`This will remove ${player.firstName} ${player.lastName} from this league. Press OK to continue.`)
+    if (deleteConfirm) {
+      this.playerService.removePlayerFromLeague(player.id!, this.league.id!).subscribe(playerFromDb => {
+        const playerIndex = this.league.players.findIndex(p => p.id == playerFromDb.id);
+        this.league.players.splice(playerIndex, 1);
+      });
+    }
+  }
 }

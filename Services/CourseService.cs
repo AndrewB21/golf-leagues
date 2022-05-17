@@ -9,9 +9,9 @@ namespace golf_leagues_identity.Services
             this.dbContext = ApplicationDbContext;
         }
 
-        public List<Course> GetAll()
+        public async Task<List<Course>> GetAll()
         {
-            return this.dbContext.Course.ToList();
+            return await this.dbContext.Course.ToListAsync();
         }
 
         
@@ -19,6 +19,6 @@ namespace golf_leagues_identity.Services
 
     public interface ICourseService
     {
-        List<Course> GetAll();
+        Task<List<Course>> GetAll();
     }
 }

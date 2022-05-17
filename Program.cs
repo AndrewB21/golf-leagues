@@ -28,6 +28,10 @@ builder.Services.AddControllers()
         x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
 builder.Services.AddRazorPages();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Authenticated", policy => policy.RequireAuthenticatedUser());
+});
 
 var app = builder.Build();
 

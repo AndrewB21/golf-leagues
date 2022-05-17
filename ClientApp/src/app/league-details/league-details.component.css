@@ -22,7 +22,7 @@
 
 .table-container {
     margin-top: 40px;
-    width: 600px;
+    width: 500px;
 }
 
 .table-container h2 {
@@ -52,4 +52,9 @@
     position: absolute;
     top: 40px;
     right: 5px;
+}
+
+.action-icon {
+    display: inline-block;
+    margin: 5px;
 }

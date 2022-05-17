@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Mvc;
 
 namespace golf_leagues_identity.Controllers;
 

@@ -20,6 +20,8 @@ export class LeagueCreatorComponent {
     endDate: new FormControl('')
   });
 
+  // TODO Update Component to use isEditing, use model binding like in other creators
+
   constructor(
     private leagueService: LeagueService,
     public dialogRef: MatDialogRef<LeagueCreatorComponent> 

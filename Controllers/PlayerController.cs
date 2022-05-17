@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using golf_leagues_identity.Services;
-using golf_leagues_identity.Models;
-
-
 namespace golf_leagues_identity.Services;
 
 public class PlayerController : Controller
