@@ -15,8 +15,3 @@
 ::ng-deep .mat-form-field-underline {
     background-color: rgb(193 182 182) !important;
 }
-
-.form-actions button {
-    display: inline-block;
-    margin: 5px;
-}

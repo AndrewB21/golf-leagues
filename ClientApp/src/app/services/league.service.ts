@@ -20,7 +20,7 @@ export class LeagueService {
 
   public createLeague(newLeague: League): Observable<League> {
     return this.httpClient.post<League>(
-      '/leagues/create',
+      '/leagues',
       newLeague,
       {
         headers: new HttpHeaders({
@@ -32,7 +32,7 @@ export class LeagueService {
 
   public updateLeague(updatedLeague: League): Observable<League> {
     return this.httpClient.put<League>(
-      '/leagues/update',
+      '/leagues',
       updatedLeague,
       {
         headers: new HttpHeaders({
@@ -43,6 +43,6 @@ export class LeagueService {
   }
 
   public deleteLeague(leagueId: number): Observable<League> {
-    return this.httpClient.delete<League>(`/leagues/delete/${leagueId}`);
+    return this.httpClient.delete<League>(`/leagues/${leagueId}`);
   }
 }

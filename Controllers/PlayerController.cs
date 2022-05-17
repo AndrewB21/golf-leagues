@@ -25,25 +25,25 @@ public class PlayerController : Controller
         return Ok(_playerService.GetPlayerById(id));
     }
 
-    [HttpPost("players/create")]
+    [HttpPost("players")]
     public IActionResult CreatePlayer([FromBody] Player newPlayer)
     {
         return Ok(_playerService.CreatePlayer(newPlayer));
     }
 
-    [HttpPost("players/update")]
+    [HttpPut("players")]
     public IActionResult UpdatePlayer([FromBody] Player updatedPlayer)
     {
         return Ok(_playerService.UpdatePlayer(updatedPlayer));
     }
 
-    [HttpDelete("players/remove/{playerId}/{leagueId}")]
+    [HttpDelete("players/{playerId}/{leagueId}")]
     public IActionResult RemovePlayerFromLeague(int playerId, int leagueId)
     {
         return Ok(_playerService.RemovePlayerFromLeague(playerId, leagueId));
     }
 
-    [HttpDelete("players/delete/{playerId}")]
+    [HttpDelete("players/{playerId}")]
     public IActionResult DeletePlayer(int playerId)
     {
         return Ok(_playerService.DeletePlayer(playerId));

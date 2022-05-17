@@ -14,7 +14,7 @@ export class EventService {
 
   public createEvent(newEvent: LeagueEvent): Observable<LeagueEvent> {
     return this.httpClient.post<LeagueEvent>(
-      '/events/create',
+      '/events',
       newEvent,
       {
         headers: new HttpHeaders({
@@ -26,7 +26,7 @@ export class EventService {
 
   public updateEvent(updatedEvent: LeagueEvent): Observable<LeagueEvent> {
     return this.httpClient.put<LeagueEvent>(
-      '/events/update',
+      '/events',
       updatedEvent,
       {
         headers: new HttpHeaders({

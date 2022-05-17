@@ -21,7 +21,7 @@ export class PlayerService {
   public createPlayer(newPlayer: Player): Observable<Player> {
     console.log(newPlayer);
     return this.httpClient.post<Player>(
-      '/players/create',
+      '/players',
       newPlayer,
       {
         headers: new HttpHeaders({
@@ -32,8 +32,8 @@ export class PlayerService {
   }
 
   public updatePlayer(updatedPlayer: Player): Observable<Player> {
-    return this.httpClient.post<Player>(
-      `/players/update`,
+    return this.httpClient.put<Player>(
+      `/players`,
       updatedPlayer,
       {
         headers: new HttpHeaders({
@@ -44,10 +44,10 @@ export class PlayerService {
   }
 
   public removePlayerFromLeague(playerId: number, leagueId: number) {
-    return this.httpClient.delete<Player>(`/players/remove/${playerId}/${leagueId}`);
+    return this.httpClient.delete<Player>(`/players/${playerId}/${leagueId}`);
   }
 
   public deletePlayer(playerId: number) {
-    return this.httpClient.delete<Player>(`/players/delete/${playerId}`);
+    return this.httpClient.delete<Player>(`/players/${playerId}`);
   }
 }

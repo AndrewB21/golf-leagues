@@ -60,13 +60,5 @@ export class PlayerCreatorComponent {
     }
   }
 
-  public removePlayer() {
-    const deleteConfirm = confirm(`This will remove ${this.data.player!.firstName} ${this.data.player!.lastName} from this league. Press OK to continue.`)
-    if (deleteConfirm) {
-      this.playerService.removePlayerFromLeague(this.data.player!.id!, this.data.league.id!).subscribe(playerFromDb => {
-        const playerIndex = this.data.league.players.findIndex(p => p.id == playerFromDb.id);
-        this.data.league.players.splice(playerIndex, 1);
-      });
-    }
-  }
+
 }

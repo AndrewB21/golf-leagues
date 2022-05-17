@@ -27,19 +27,19 @@ public class LeagueController : Controller
         return Ok(_leagueService.GetLeagueById(id));
     }
 
-    [HttpPost("leagues/create")]
+    [HttpPost("leagues")]
     public IActionResult CreateLeague([FromBody] League newLeague)
     {
         return Ok(_leagueService.CreateLeague(newLeague));
     }
 
-    [HttpPut("leagues/update")]
+    [HttpPut("leagues")]
     public IActionResult UpdateLeague([FromBody] League updatedLeague)
     {
         return Ok(_leagueService.UpdateLeague(updatedLeague));
     }
 
-    [HttpDelete("leagues/delete/{leagueId}")]
+    [HttpDelete("leagues/{leagueId}")]
     public IActionResult DeleteLeague(int leagueId)
     {
         return Ok(_leagueService.DeleteLeague(leagueId));

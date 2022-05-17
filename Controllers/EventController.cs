@@ -23,13 +23,13 @@ public class EventController : Controller
         return Ok(_eventService.GetAll());
     }
 
-    [HttpPost("events/create")]
+    [HttpPost("events")]
     public IActionResult CreateEvent([FromBody] Event newEvent)
     {
         return Ok(_eventService.CreateEvent(newEvent));
     }
 
-    [HttpPut("events/update")]
+    [HttpPut("events")]
     public IActionResult UpdateEvent([FromBody] Event updatedEvent)
     {
         return Ok(_eventService.UpdateEvent(updatedEvent));
