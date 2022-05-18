@@ -1,8 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LeagueEvent } from '../models/league-event.model';
 import { League } from '../models/league.model';
 import { LeagueService } from '../services/league.service';
+import { cloneDeep } from 'lodash-es';
 
 @Component({
   selector: 'app-league-creator',
@@ -11,6 +13,7 @@ import { LeagueService } from '../services/league.service';
 })
 export class LeagueCreatorComponent {
   @Output() public leagueSubmitted: EventEmitter<League> = new EventEmitter<League>();
+  public leagueToEdit: League;
   public minDate: Date;
   public maxEndDate: Date;
   public leagueForm: FormGroup = new FormGroup({
@@ -24,27 +27,32 @@ export class LeagueCreatorComponent {
 
   constructor(
     private leagueService: LeagueService,
-    public dialogRef: MatDialogRef<LeagueCreatorComponent> 
+    public dialogRef: MatDialogRef<LeagueCreatorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {league: League, isEditing: boolean }
   ) {
     this.minDate = new Date();
     this.maxEndDate = new Date(this.minDate.getFullYear() + 1, this.minDate.getMonth(), this.minDate.getDate());
-    console.log(this.maxEndDate);
+    if (this.data.isEditing) {
+      this.leagueToEdit = cloneDeep(this.data.league);
+    } else {
+      this.leagueToEdit = new League('New League', '', [], this.minDate, this.maxEndDate, []);
+    }
+    console.log(this.leagueToEdit);
   }
 
   public submitForm () {
-    const formValues = this.leagueForm.value;
-
-    // Convert Moment objects to Date objects
-    formValues.startDate = formValues.startDate.toDate();
-    formValues.endDate = formValues.endDate.toDate();
-    
-    const newLeague = new League(formValues.name, formValues.description, undefined, formValues.startDate, formValues.endDate, []);
     try {
-      this.leagueService.createLeague(newLeague).subscribe((leagueFromDb: League) => {
-      if(leagueFromDb) {
-        this.dialogRef.close();
+      if (this.data.isEditing) {
+        this.leagueService.updateLeague(this.leagueToEdit).subscribe((leagueFromDb: League) => {
+          console.log("League updated");
+          this.dialogRef.close();
+        })
+      } else {
+        this.leagueService.createLeague(this.leagueToEdit).subscribe((leagueFromDb: League) => {
+          console.log("League submitted");
+          this.dialogRef.close();
+        });
       }
-      });
     } catch {
       console.warn("An error occurred while submitting a league.")
     }

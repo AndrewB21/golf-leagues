@@ -1,21 +1,21 @@
 <h1>Create A League</h1>
-<form class="editor-form" [formGroup]="leagueForm" (submit)="submitForm()">
+<form class="editor-form" (submit)="submitForm()">
     <div class="form-group">
         <mat-form-field >
             <mat-label>League Name</mat-label>
-            <input matInput placeholder="test" formControlName="name">
+            <input matInput placeholder="test" name="name" [(ngModel)]="leagueToEdit.name">
           </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field >
             <mat-label>League Description</mat-label>
-            <input matInput placeholder="test" formControlName="description">
+            <input matInput placeholder="test" name="description" [(ngModel)]="leagueToEdit.description">
           </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field >
             <mat-label>Choose a date</mat-label>
-            <input matInput [min]="minDate" [matDatepicker]="start" formControlName="startDate">
+            <input matInput [min]="minDate" [matDatepicker]="start" name="startDate" [(ngModel)]="leagueToEdit.startDate">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
             <mat-datepicker #start></mat-datepicker>
@@ -24,7 +24,7 @@
     <div class="form-group">
         <mat-form-field >
             <mat-label>Choose a date</mat-label>
-            <input matInput [min]="minDate" [max]="maxEndDate" [matDatepicker]="end" formControlName="endDate">
+            <input matInput [min]="minDate" [max]="maxEndDate" [matDatepicker]="end" name="endDate" [(ngModel)]="leagueToEdit.endDate">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
             <mat-datepicker #end></mat-datepicker>

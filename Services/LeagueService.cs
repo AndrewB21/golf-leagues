@@ -9,14 +9,14 @@ namespace golf_leagues_identity.Services
             this.dbContext = ApplicationDbContext;
         }
 
-        public List<League> GetAll()
+        public Task<List<League>> GetAll()
         {
             return this.dbContext.League
                 .Include(l => l.Players)
                 .ThenInclude(p => p.PlayerPoints)
                 .Include(l => l.Events)
                 .ThenInclude(e => e.Course)
-                .ToList();
+                .ToListAsync();
         }
 
          public League GetLeagueById(int id)
@@ -55,7 +55,7 @@ namespace golf_leagues_identity.Services
 
     public interface ILeagueService
     {
-        List<League> GetAll();
+        Task<List<League>> GetAll();
         League GetLeagueById(int id);
         League CreateLeague(League newLeague);
         League UpdateLeague(League updatedLeague);

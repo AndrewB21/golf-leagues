@@ -1,4 +1,6 @@
 namespace golf_leagues_identity.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 public class CourseController : Controller
 {
@@ -13,7 +15,7 @@ public class CourseController : Controller
     }
 
     [HttpGet("courses/all")]
-    [Authorize(Policy = "Authenticated")]
+    [Authorize] 
     public async Task<IActionResult> GetAll()
     {
         return Ok(await _courseService.GetAll());

@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueCreatorComponent, {
       width: '300px',
+      data: { isEditing: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {

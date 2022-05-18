@@ -9,9 +9,9 @@ namespace golf_leagues_identity.Services
             this.dbContext = ApplicationDbContext;
         }
 
-        public async Task<List<Course>> GetAll()
+        public Task<List<Course>> GetAll()
         {
-            return await this.dbContext.Course.ToListAsync();
+            return this.dbContext.Course.ToListAsync();
         }
 
         

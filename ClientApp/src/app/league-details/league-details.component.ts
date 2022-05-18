@@ -52,6 +52,10 @@ export class LeagueDetailsComponent {
       width: '400px',
       data: { league: this.league, isEditing: true }
     })
+
+    dialogRef.afterClosed().subscribe(updatedLeague => {
+      this.refreshLeague();
+    });
   }
 
   public deleteLeague() {
@@ -60,7 +64,7 @@ export class LeagueDetailsComponent {
       this.leagueService.deleteLeague(this.league.id!).subscribe((deletedLeague) => {
         if (deletedLeague) {
           console.log(`${deletedLeague.name} deleted successfully.`);
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('dashboard');
         }
       });
     }

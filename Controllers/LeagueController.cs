@@ -15,9 +15,9 @@ public class LeagueController : Controller
     }
 
     [HttpGet("leagues/all")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        return Ok(_leagueService.GetAll());
+        return Ok(await _leagueService.GetAll());
     }
 
     [HttpGet]
