@@ -8,6 +8,7 @@ import { PlayerPoints } from '../models/playerpoints.model';
 import { LeagueService } from '../services/league.service';
 import { PlayerService } from '../services/player.service';
 import { cloneDeep } from 'lodash-es'
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Component({
   selector: 'app-player-creator',
@@ -24,6 +25,7 @@ export class PlayerCreatorComponent {
     public leagueService: LeagueService,
     private playerService: PlayerService,
     public dialogRef: MatDialogRef<LeagueCreatorComponent>,
+    private snackBarService: SnackBarService,
     @Inject(MAT_DIALOG_DATA) public data: {league: League, player?: Player}
   ) {
       this.isCreatingNewPlayer = this.data.player ? false : true;
@@ -45,7 +47,7 @@ export class PlayerCreatorComponent {
           if (playerFromDb) {
             // Update the client side league so changes are reflected
             this.data.league.players.push(playerFromDb);
-            console.log(this.data.league);
+            this.snackBarService.openSnackBar("Player Added Successfully.");
           }
         });
       });
@@ -55,6 +57,7 @@ export class PlayerCreatorComponent {
           // Update the client side league so changes are reflected
           const playerIndex = this.data.league.players.findIndex(p => p.id == playerFromDb.id);
           this.data.league.players[playerIndex] = playerFromDb;
+          this.snackBarService.openSnackBar("Player Updated Successfully.");
         }
       });
     }

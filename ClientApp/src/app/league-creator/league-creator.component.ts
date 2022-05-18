@@ -5,6 +5,7 @@ import { LeagueEvent } from '../models/league-event.model';
 import { League } from '../models/league.model';
 import { LeagueService } from '../services/league.service';
 import { cloneDeep } from 'lodash-es';
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Component({
   selector: 'app-league-creator',
@@ -23,11 +24,10 @@ export class LeagueCreatorComponent {
     endDate: new FormControl('')
   });
 
-  // TODO Update Component to use isEditing, use model binding like in other creators
-
   constructor(
     private leagueService: LeagueService,
     public dialogRef: MatDialogRef<LeagueCreatorComponent>,
+    private snackBarService: SnackBarService,
     @Inject(MAT_DIALOG_DATA) public data: {league: League, isEditing: boolean }
   ) {
     this.minDate = new Date();
@@ -45,11 +45,12 @@ export class LeagueCreatorComponent {
       if (this.data.isEditing) {
         this.leagueService.updateLeague(this.leagueToEdit).subscribe((leagueFromDb: League) => {
           console.log("League updated");
+          this.snackBarService.openSnackBar("League Updated Successfully.")
           this.dialogRef.close();
         })
       } else {
         this.leagueService.createLeague(this.leagueToEdit).subscribe((leagueFromDb: League) => {
-          console.log("League submitted");
+          this.snackBarService.openSnackBar("League Submitted Successfully.")
           this.dialogRef.close();
         });
       }

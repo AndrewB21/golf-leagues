@@ -8,6 +8,7 @@ import { LeagueEvent } from '../models/league-event.model';
 import { League } from '../models/league.model';
 import { CourseService } from '../services/course.service';
 import { EventService } from '../services/event.service';
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Component({
   selector: 'app-event-creator',
@@ -26,6 +27,7 @@ export class EventCreatorComponent {
     private eventService: EventService,
     private courseService: CourseService,
     public dialogRef: MatDialogRef<LeagueCreatorComponent>,
+    private snackBarService: SnackBarService,
     @Inject(MAT_DIALOG_DATA) public data: {league: League, event: LeagueEvent }
   ) {
     this.minDate = new Date();
@@ -42,17 +44,20 @@ export class EventCreatorComponent {
       this.eventToEdit.leagueId = this.data.league.id!;
       try {
         this.eventService.createEvent(this.eventToEdit).subscribe((eventFromDb: LeagueEvent) => {
-        if(eventFromDb) {
-          this.eventToEdit.course = eventFromDb.course;
-        }
+          if(eventFromDb) {
+            this.eventToEdit.course = eventFromDb.course;
+            this.snackBarService.openSnackBar("Event Created Successfully.")
+          }
         });
       } catch {
         console.warn("An error occurred while submitting a league.")
+        this.snackBarService.openSnackBar("An error occurred while submitting a league.")
       }
     } else {
       this.eventService.updateEvent(this.eventToEdit).subscribe((eventFromDb: LeagueEvent) => {
         if (eventFromDb) {
           this.eventToEdit.course = eventFromDb.course;
+          this.snackBarService.openSnackBar("Event Updated Successfully.")
         }
       })
     }

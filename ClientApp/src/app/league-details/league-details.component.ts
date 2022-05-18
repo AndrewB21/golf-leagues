@@ -13,6 +13,7 @@ import { Player } from '../models/player.model';
 import { PlayerCreatorComponent } from '../player-creator/player-creator.component';
 import { LeagueService } from '../services/league.service';
 import { PlayerService } from '../services/player.service';
+import { SnackBarService } from '../services/snack-bar.service';
 
 @Component({
   selector: 'app-league-details',
@@ -32,7 +33,8 @@ export class LeagueDetailsComponent {
     private router: Router,
     public dialog: MatDialog,
     private leagueService: LeagueService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private snackBarService: SnackBarService
   ) { 
     this.league = this.route.snapshot.data['league'];
     this.players = new MatTableDataSource<Player>(this.league.players);
@@ -63,7 +65,7 @@ export class LeagueDetailsComponent {
     if (deleteConfirmed) {
       this.leagueService.deleteLeague(this.league.id!).subscribe((deletedLeague) => {
         if (deletedLeague) {
-          console.log(`${deletedLeague.name} deleted successfully.`);
+          this.snackBarService.openSnackBar(`${deletedLeague.name} deleted successfully.`);
           this.router.navigateByUrl('dashboard');
         }
       });
@@ -123,8 +125,8 @@ export class LeagueDetailsComponent {
     const deleteConfirm = confirm(`This will remove ${player.firstName} ${player.lastName} from this league. Press OK to continue.`)
     if (deleteConfirm) {
       this.playerService.removePlayerFromLeague(player.id!, this.league.id!).subscribe(playerFromDb => {
-        const playerIndex = this.league.players.findIndex(p => p.id == playerFromDb.id);
-        this.league.players.splice(playerIndex, 1);
+        this.snackBarService.openSnackBar("Player Removed Successfully.");
+        this.refreshLeague();
       });
     }
   }

@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -58,6 +59,7 @@ import { EventCreatorComponent } from './event-creator/event-creator.component';
     MatMomentDateModule,
     MatSelectModule,
     MatSelectFilterModule,
+    MatSnackBarModule,
     MatTableModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
